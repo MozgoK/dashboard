@@ -1,3 +1,70 @@
-<p>
-  login works!
-</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <section class="form-block login-group">
+    <label>DASHBOARD LOGIN</label>
+
+    <label
+      for="username"
+      aria-haspopup="true"
+      role="tooltip"
+      class="tooltip tooltip-validation tooltip-sm"
+      [class.invalid]="form.get('username').invalid && (form.get('username').dirty || form.get('username').touched)"
+    >
+      <input
+        id="username"
+        type="text"
+        placeholder="Username"
+        formControlName="username"
+      >
+      <span class="tooltip-content" *ngIf="form.get('username')['errors'] && form.get('username')['errors']['required']">Необходимо ввести логин</span>
+    </label>
+
+
+    <label
+      for="password"
+      aria-haspopup="true"
+      role="tooltip"
+      class="tooltip tooltip-validation tooltip-sm"
+      [class.invalid]="form.get('password').invalid && (form.get('password').dirty || form.get('password').touched)"
+    >
+      <input
+        id="password"
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+      >
+
+      <span
+        class="tooltip-content"
+        *ngIf="form.get('password')['errors'] && form.get('password')['errors']['required']"
+      >
+        Необходимо ввести пароль
+      </span>
+
+      <span
+        class="tooltip-content"
+        *ngIf="form.get('password')['errors'] && form.get('password')['errors']['minlength']"
+      >
+        Пароль не может быть меньше {{ form.get('password')['errors']['minlength']['requiredLength'] }} символов
+      </span>
+    </label>
+
+    <div
+      class="error active"
+      *ngIf="message.text"
+    >
+      {{ message.text }}
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary btn-block"
+      [disabled]="form.invalid"
+    >
+      Log In
+    </button>
+    <label class="signup">
+      Нет аккаунта? 
+      <a href="javascript://">Зарегистрироваться!</a>
+    </label>
+  </section>
+</form>
