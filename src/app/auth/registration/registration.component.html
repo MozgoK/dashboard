@@ -1,3 +1,112 @@
-<p>
-  registration works!
-</p>
+<form class="compact" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <section class="form-block login-group">
+    <label>Регистрация для получения доступа</label>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <label for="username">Имя</label>
+      </div>
+      <div class="col-xs-9">
+        <label
+          for="username"
+          aria-haspopup="true"
+          role="tooltip"
+          class="tooltip tooltip-validation tooltip-md tooltip-right"
+          [class.invalid]="form.get('username').invalid && (form.get('username').dirty || form.get('username').touched)"
+        >
+          <input
+            class="form-control"
+            type="text"
+            id="username"
+            placeholder="Введите имя для профиля"
+            formControlName="username"
+          >
+
+          <span
+            class="tooltip-content"
+            *ngIf="form.get('username')['errors'] && form.get('username')['errors']['required']"
+          >
+            Необходимо ввести логин для профиля
+          </span>
+          <span
+            class="tooltip-content"
+            *ngIf="form.get('username')['errors'] && form.get('username')['errors']['minlength']"
+          >
+            Минимальное количество символов {{ form.get('username')['errors']['minlength']['requiredLength'] }}
+          </span>
+          <span
+            class="tooltip-content"
+            *ngIf="form.get('username')['errors'] && form.get('username')['errors']['forbiddenEmail']"
+          >
+            Профиль с таким именем уже существует
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <label for="password">Пароль</label>
+      </div>
+      <div class="col-xs-9">
+        <label
+          for="username"
+          aria-haspopup="true"
+          role="tooltip"
+          class="tooltip tooltip-validation tooltip-md tooltip-right"
+          [class.invalid]="form.get('password').invalid && (form.get('password').dirty || form.get('password').touched)"
+        >
+          <input
+            class="form-control"
+            type="password"
+            id="password"
+            placeholder="Введите пароль к профилю"
+            formControlName="password"
+          >
+          <span
+            class="tooltip-content"
+            *ngIf="form.get('password')['errors'] && form.get('password')['errors']['required']"
+          >
+            Необходимо ввести пароль для профиля
+          </span>
+          <span
+            class="tooltip-content"
+            *ngIf="form.get('password')['errors'] && form.get('password')['errors']['minlength']"
+          >
+            Минимальное количество символов {{ form.get('password')['errors']['minlength']['requiredLength']}}
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-12">
+        <div class="checkbox-inline" [style.color]="form.get('agree')['errors'] && form.get('agree')['errors']['required'] ? 'red' : ''">
+          <input type="checkbox" id="othercheckbox" formControlName="agree">
+          <label for="othercheckbox">Согласен с правилами</label>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="error active"
+      *ngFor="let message of messages"
+    >
+      {{ message.text }}
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary btn-block"
+      [disabled]="form.invalid || loading"
+      [clrLoading]="loading"
+    >
+      Зарегистрироваться
+    </button>
+    <label class="signup">
+      Уже есть аккаунт? 
+      <a [routerLink]="'/login'">Войти!</a>
+    </label>
+
+  </section>
+</form>

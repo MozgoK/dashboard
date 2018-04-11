@@ -12,7 +12,7 @@
       <input
         id="username"
         type="text"
-        placeholder="Username"
+        placeholder="Логин"
         formControlName="username"
       >
       <span class="tooltip-content" *ngIf="form.get('username')['errors'] && form.get('username')['errors']['required']">Необходимо ввести логин</span>
@@ -29,7 +29,7 @@
       <input
         id="password"
         type="password"
-        placeholder="Password"
+        placeholder="Пароль"
         formControlName="password"
       >
 
@@ -48,23 +48,28 @@
       </span>
     </label>
 
-    <div
-      class="error active"
-      *ngIf="message.text"
-    >
-      {{ message.text }}
-    </div>
+
+    <clr-alert [clrAlertType]="'alert-' + message.type" [clrAlertAppLevel]="true" [(clrAlertClosed)]="message.closed">
+      <clr-alert-item>
+        <span class="alert-text">
+          {{ message.text }}
+        </span>
+      </clr-alert-item>
+    </clr-alert>
+
 
     <button
       type="submit"
       class="btn btn-primary btn-block"
-      [disabled]="form.invalid"
+      [disabled]="form.invalid || loading"
+      [clrLoading]="loading"
     >
-      Log In
+      Войти
     </button>
+
     <label class="signup">
       Нет аккаунта? 
-      <a href="javascript://">Зарегистрироваться!</a>
+      <a [routerLink]="'/registration'">Зарегистрироваться!</a>
     </label>
   </section>
 </form>
